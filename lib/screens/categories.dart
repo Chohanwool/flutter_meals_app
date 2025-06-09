@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/category.dart';
+import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
+
+  void _selectCategory(BuildContext context) {
+    // stateless 에서는 context not globaly available, so BuildContext 매개변수를 받아 사용
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => MealsScreen(title: 'Some title', meals: []),
+      ),
+    ); //Navigator.push(context, route);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +32,12 @@ class CategoriesScreen extends StatelessWidget {
           //   (category) => CategoryGridItem(category: category),
           // ),
           for (final category in availableCategories)
-            CategoryGridItem(category: category),
+            CategoryGridItem(
+              category: category,
+              onSelectCategory: () {
+                _selectCategory(context);
+              },
+            ),
         ],
       ),
     );
