@@ -12,7 +12,12 @@ class MealsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
       itemCount: meals.length,
-      itemBuilder: (context, index) => Text(meals[index].title),
+      itemBuilder: (context, index) => Text(
+        meals[index].title,
+        style: Theme.of(
+          context,
+        ).textTheme.bodyMedium!.copyWith(color: Colors.white),
+      ),
     );
 
     if (meals.isEmpty) {
