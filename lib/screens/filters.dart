@@ -11,6 +11,9 @@ class FiltersScreen extends StatefulWidget {
 
 class _FiltersScreenState extends State<FiltersScreen> {
   var _glutenFreeFilters = false;
+  var _lactoseFreeFilters = false;
+  var _vegetarianFreeFilters = false;
+  var _veganFreeFilters = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +46,72 @@ class _FiltersScreenState extends State<FiltersScreen> {
             ),
             subtitle: Text(
               'Only include gluten-free meals.',
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+          SwitchListTile(
+            value: _lactoseFreeFilters,
+            onChanged: (isChecked) {
+              setState(() {
+                _lactoseFreeFilters = isChecked;
+              });
+            },
+            title: Text(
+              'Lactose-free',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            subtitle: Text(
+              'Only include lactose-free meals.',
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+          SwitchListTile(
+            value: _vegetarianFreeFilters,
+            onChanged: (isChecked) {
+              setState(() {
+                _vegetarianFreeFilters = isChecked;
+              });
+            },
+            title: Text(
+              'Vegetarian-free',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            subtitle: Text(
+              'Only include vegetarian-free meals.',
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+          SwitchListTile(
+            value: _veganFreeFilters,
+            onChanged: (isChecked) {
+              setState(() {
+                _veganFreeFilters = isChecked;
+              });
+            },
+            title: Text(
+              'Vegan-free',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
+            subtitle: Text(
+              'Only include vegan-free meals.',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: Theme.of(context).colorScheme.onSurface,
               ),
