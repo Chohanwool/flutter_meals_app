@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/providers/meals_provider.dart';
-import 'package:meals/screens/filters.dart';
 
 // filters.dart 에서 가져옴옴
 enum Filter { glutenFree, lactoseFree, vegetarian, vegan }
