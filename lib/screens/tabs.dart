@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meals/screens/categories.dart';
 import 'package:meals/screens/filters.dart';
 import 'package:meals/screens/meals.dart';
-import 'package:meals/models/meal.dart';
 import 'package:meals/widgets/main_drawer.dart';
-import 'package:meals/providers/meals_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meals/providers/favorites_provider.dart';
+
+import 'package:meals/providers/filters_provider.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
@@ -19,19 +19,13 @@ class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({super.key});
 
   @override
-  ConsumerState<TabsScreen> createState() => _TablScreen();
+  ConsumerState<TabsScreen> createState() => _TablScreenState();
 }
 
-class _TablScreen extends ConsumerState<TabsScreen> {
+class _TablScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
   // Provider 사용으로 불필요함
   // final List<Meal> _favoriteMeals = [];
-  Map<Filter, bool> _selectedFilters = {
-    Filter.glutenFree: false,
-    Filter.lactoseFree: false,
-    Filter.vegetarian: false,
-    Filter.vegan: false,
-  };
 
   // Provider 사용으로 불필요함
   // void _toggleMealFavoriteStatus(Meal meal) {
@@ -60,41 +54,23 @@ class _TablScreen extends ConsumerState<TabsScreen> {
     Navigator.of(context).pop();
 
     if (identifier == 'filters') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
-        MaterialPageRoute(
-          builder: (context) => FiltersScreen(currentFilter: _selectedFilters),
-        ),
+      //provider 에서 대신 해줌
+      //final result =
+      await Navigator.of(context).push<Map<Filter, bool>>(
+        MaterialPageRoute(builder: (context) => const FiltersScreen()),
       );
 
       // Filter 목록을 화면에 바로 반영하기 위해 setState로 받음
-      setState(() {
-        _selectedFilters = result ?? kInitialFilters;
-      });
+      // //provider 에서 대신 해줌
+      // // setState(() {
+      // //   _selectedFilters = result ?? kInitialFilters;
+      // // });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final meals = ref.watch(mealsProvider); // 데이터의 변화가 있으면 재 빌드
-
-    // 각 필터 조건을 검사
-    // 조건에 맞지 않으면 false 반환 (해당 음식 제외)
-    // 모든 조건을 통과하면 true 반환 (해당 음식 포함)
-    final availableMeals = meals.where((meal) {
-      if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
-        return false;
-      }
-      if (_selectedFilters[Filter.lactoseFree]! && !meal.isLactoseFree) {
-        return false;
-      }
-      if (_selectedFilters[Filter.vegetarian]! && !meal.isVegetarian) {
-        return false;
-      }
-      if (_selectedFilters[Filter.vegan]! && !meal.isVegan) {
-        return false;
-      }
-      return true;
-    }).toList();
+    final availableMeals = ref.watch(filteredMealsProvider);
 
     Widget activePage = CategoriesScreen(
       //onToggleFavorite: _toggleMealFavoriteStatus,
@@ -105,9 +81,7 @@ class _TablScreen extends ConsumerState<TabsScreen> {
     // favoriteMeals 가 필요한 부분
     if (_selectedPageIndex == 1) {
       final favoriteMeals = ref.watch(favoriteMealsProvider);
-      activePage = MealsScreen(
-        meals: favoriteMeals,
-      );
+      activePage = MealsScreen(meals: favoriteMeals);
       activePageTitle = 'Your Favorites';
     }
 
