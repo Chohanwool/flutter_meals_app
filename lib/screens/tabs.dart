@@ -107,15 +107,11 @@ class _TablScreen extends ConsumerState<TabsScreen> {
       return true;
     }).toList();
 
-    Widget activePage = CategoriesScreen(
-      availableMeals: availableMeals,
-    );
+    Widget activePage = CategoriesScreen(availableMeals: availableMeals);
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = MealsScreen(
-        meals: favoriteMeals,
-      );
+      activePage = MealsScreen(meals: favoriteMeals);
       activePageTitle = 'Your Favorites';
     }
 

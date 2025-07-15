@@ -5,7 +5,7 @@ class FavoriteMealsNotifier extends StateNotifier<List<Meal>> {
   FavoriteMealsNotifier() : super([]);
 
   // 상태 변경 메서드 : 즐겨 찾기 추가/제거
-  void toggleMealFavoriteStatus(Meal meal) {
+  bool toggleMealFavoriteStatus(Meal meal) {
     /**
      * state
      * - 값 : 현재 즐겨찾기 된 Meal 객체들의 List
@@ -18,9 +18,11 @@ class FavoriteMealsNotifier extends StateNotifier<List<Meal>> {
     if (isFavorite) {
       // 제거
       state = state.where((m) => m.id != meal.id).toList();
+      return false;
     } else {
       // 추가
       state = [...state, meal];
+      return true;
     }
   }
 }
