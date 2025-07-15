@@ -8,15 +8,12 @@ import 'package:meals/models/meal.dart';
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({
     super.key,
-    required this.onToggleFavorite,
     required this.availableMeals,
   });
 
-  final void Function(Meal meal) onToggleFavorite;
   final List<Meal> availableMeals;
 
   void _selectCategory(BuildContext context, Category category) {
-    // stateless 에서는 context not globaly available, so BuildContext 매개변수를 받아 사용
     final filteredMeals = availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList();
@@ -26,10 +23,9 @@ class CategoriesScreen extends StatelessWidget {
         builder: (context) => MealsScreen(
           title: category.title,
           meals: filteredMeals,
-          onToggleFavorite: onToggleFavorite,
         ),
       ),
-    ); //Navigator.push(context, route);
+    );
   }
 
   @override
@@ -42,9 +38,6 @@ class CategoriesScreen extends StatelessWidget {
         mainAxisSpacing: 20,
       ),
       children: [
-        // ...availableCategories.map(
-        //   (category) => CategoryGridItem(category: category),
-        // ),
         for (final category in availableCategories)
           CategoryGridItem(
             category: category,
