@@ -88,6 +88,7 @@ class _TablScreen extends ConsumerState<TabsScreen> {
     // 모든 조건을 통과하면 true 반환 (해당 음식 포함)
 
     final meals = ref.watch(mealsProvider);
+    final favoriteMeals = ref.watch(favoriteMealsProvider);
 
     // Provider 사용 전, 예시 코드
     final availableMeals = meals.where((meal) {
@@ -107,15 +108,13 @@ class _TablScreen extends ConsumerState<TabsScreen> {
     }).toList();
 
     Widget activePage = CategoriesScreen(
-      onToggleFavorite: _toggleMealFavoriteStatus,
       availableMeals: availableMeals,
     );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
       activePage = MealsScreen(
-        meals: _favoriteMeals,
-        onToggleFavorite: _toggleMealFavoriteStatus,
+        meals: favoriteMeals,
       );
       activePageTitle = 'Your Favorites';
     }
